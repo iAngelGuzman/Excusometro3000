@@ -1,0 +1,47 @@
+<ion-content [fullscreen]="true" class="fun-bg">
+  <div class="content-wrapper ion-padding">
+    <div class="header-container">
+      <div class="logo-circle">
+        <ion-icon name="happy-outline"></ion-icon>
+      </div>
+      <h1 class="title bouncy">Excusómetro 3000</h1>
+      <p class="subtitle">¡La excusa perfecta a un giro de distancia!</p>
+    </div>
+
+    <ion-card class="form-card floating-card">
+      <ion-card-content>
+        <ion-list lines="none" class="transparent-list">
+          <ion-item class="input-item">
+            <div class="icon-box target-icon" slot="start">
+              <ion-icon name="people"></ion-icon>
+            </div>
+            <ion-select label="¿Para quién es?" label-placement="stacked" [(ngModel)]="selectedTarget" interface="action-sheet">
+              <ion-select-option *ngFor="let target of targets" [value]="target">{{ target }}</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item class="input-item">
+            <div class="icon-box danger-icon" slot="start">
+              <ion-icon name="warning"></ion-icon>
+            </div>
+            <ion-select label="Nivel del problema" label-placement="stacked" [(ngModel)]="selectedLevel" interface="action-sheet">
+              <ion-select-option *ngFor="let level of levels" [value]="level">{{ level }}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+
+    <div class="roulette-section">
+      <app-roulette 
+        [isSpinning]="isSpinning" 
+        (spinComplete)="onSpinComplete()">
+      </app-roulette>
+    </div>
+    
+    <div class="info-text" *ngIf="isSpinning">
+      <ion-icon name="sparkles" class="spin-icon"></ion-icon>
+      ¡Buscando la mejor excusa...!
+    </div>
+  </div>
+</ion-content>

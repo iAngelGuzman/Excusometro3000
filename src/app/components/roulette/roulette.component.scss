@@ -1,0 +1,365 @@
+.roulette-wrapper {
+  position: relative;
+  width: 260px;
+  height: 260px;
+  margin: 0 auto;
+  display: block;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  background: transparent;
+  border: none;
+}
+
+.roulette-wrapper.celebrate {
+  animation: celebration-bump 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.roulette-wrapper.spinning {
+  filter: drop-shadow(0 0 20px rgba(255, 105, 180, 0.6));
+}
+
+@keyframes celebration-bump {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1) rotate(5deg); }
+  75% { transform: scale(0.95) rotate(-3deg); }
+  100% { transform: scale(1) rotate(0); }
+}
+
+/* ===== RAYOS DE LUZ ===== */
+.light-rays {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.ray {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  opacity: 0.6;
+  animation: ray-rotate 3s linear infinite;
+  animation-delay: var(--delay);
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    rgba(255, 105, 180, 0.4) 10deg,
+    rgba(138, 43, 226, 0.3) 20deg,
+    transparent 30deg,
+    transparent 360deg
+  );
+  border-radius: 50%;
+}
+
+@keyframes ray-rotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* ===== HALO DE GLOW ===== */
+.glow-effect {
+  position: absolute;
+  width: 350px;
+  height: 350px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(255, 105, 180, 0.3) 0%, transparent 70%);
+  border-radius: 50%;
+  z-index: 0;
+  animation: glow-pulse 1.5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes glow-pulse {
+  0% { 
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.3;
+  }
+  50% { 
+    transform: translate(-50%, -50%) scale(1.2);
+    opacity: 0.6;
+  }
+  100% { 
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.3;
+  }
+}
+
+/* ===== PUNTERO MEJORADO ===== */
+.pointer {
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  font-size: 50px;
+  color: var(--ion-color-secondary, #ff6b6b);
+  filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.4));
+  animation: pointer-bob 1s ease-in-out infinite alternate;
+  transition: all 0.2s;
+}
+
+.pointer.active {
+  animation: pointer-pulse 0.3s ease-in-out infinite;
+  filter: drop-shadow(0px 4px 10px rgba(255, 105, 180, 0.8)) 
+          drop-shadow(0px 0px 15px rgba(138, 43, 226, 0.6));
+}
+
+@keyframes pointer-bob {
+  from { transform: translateX(-50%) translateY(0); }
+  to { transform: translateX(-50%) translateY(-5px); }
+}
+
+@keyframes pointer-pulse {
+  0% { transform: translateX(-50%) scale(1); }
+  50% { transform: translateX(-50%) scale(1.2); }
+  100% { transform: translateX(-50%) scale(1); }
+}
+
+/* ===== CONTENEDOR DE RUEDA ===== */
+.wheel-container {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  transition: transform 3s cubic-bezier(0.17, 0.67, 0.12, 0.99);
+  will-change: transform;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 5;
+  transform-origin: center center;
+}
+
+/* ===== HALO ALREDEDOR DE RUEDA ===== */
+.wheel-halo {
+  display: none;
+}
+
+/* ===== RUEDA ===== */
+.wheel {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  position: relative;
+  overflow: hidden;
+  border: 8px solid white;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3),
+              0 0 20px rgba(255, 105, 180, 0.3),
+              inset 0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+/* ===== INTERIOR DE RUEDA CON GRADIENTES DINÁMICOS ===== */
+.wheel-inner {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: conic-gradient(
+    #ff6b6b 0deg 60deg,
+    #feca57 60deg 120deg,
+    #48dbfb 120deg 180deg,
+    #1dd1a1 180deg 240deg,
+    #5f27cd 240deg 300deg,
+    #ff9ff3 300deg 360deg
+  );
+  animation: color-shift 6s ease-in-out infinite;
+}
+
+@keyframes color-shift {
+  0%, 100% {
+    filter: brightness(1) saturate(1);
+  }
+  50% {
+    filter: brightness(1.2) saturate(1.3);
+  }
+}
+
+/* ===== ETIQUETAS ===== */
+.labels {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  border-radius: 50%;
+}
+
+.label {
+  position: absolute;
+  top: 15px;
+  left: 50%;
+  transform-origin: 50% 115px;
+  transform: translateX(-50%) rotate(calc(60deg * var(--i) - 30deg));
+  font-size: 28px;
+  font-weight: 900;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.4),
+               0 0 10px rgba(255, 255, 255, 0.3);
+  animation: label-glow 1s ease-in-out infinite;
+}
+
+@keyframes label-glow {
+  0%, 100% {
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.4),
+                 0 0 10px rgba(255, 255, 255, 0.3);
+  }
+  50% {
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.4),
+                 0 0 20px rgba(255, 255, 255, 0.8);
+  }
+}
+
+/* ===== DESTELLOS EN LA RUEDA ===== */
+.sparkles {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  top: 0;
+  left: 0;
+}
+
+.sparkle {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: radial-gradient(circle, #fff 0%, transparent 70%);
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) 
+             rotate(var(--angle))
+             translateY(-110px);
+  animation: sparkle-twinkle 0.6s ease-in-out infinite;
+  box-shadow: 0 0 10px #fff, 0 0 20px rgba(138, 43, 226, 0.6);
+}
+
+@keyframes sparkle-twinkle {
+  0%, 100% { 
+    opacity: 0;
+    transform: translate(-50%, -50%) 
+               rotate(var(--angle))
+               translateY(-110px)
+               scale(0);
+  }
+  50% { 
+    opacity: 1;
+    transform: translate(-50%, -50%) 
+               rotate(var(--angle))
+               translateY(-120px)
+               scale(1);
+  }
+}
+
+/* ===== BOTÓN CENTRAL MEJORADO ===== */
+.center-btn {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  top: 50%;
+  left: 50%;
+  margin: -40px 0 0 -40px;
+  background: linear-gradient(135deg, #ffffff, #f0f0f0);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 900;
+  font-size: 16px;
+  color: var(--ion-color-primary, #8a2be2);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3), 
+              inset 0 -3px 5px rgba(0,0,0,0.1),
+              0 0 15px rgba(138, 43, 226, 0.4);
+  z-index: 15;
+  border: 5px solid white;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  overflow: hidden;
+}
+
+.btn-glow {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(138, 43, 226, 0.3) 0%, transparent 70%);
+  animation: btn-glow-pulse 2s ease-in-out infinite;
+}
+
+@keyframes btn-glow-pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.3);
+    opacity: 0;
+  }
+}
+
+.center-btn:active {
+  transform: scale(0.9);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3),
+              0 0 20px rgba(138, 43, 226, 0.6);
+}
+
+.center-btn.disabled {
+  opacity: 0.95;
+  cursor: not-allowed;
+  animation: pulse-btn 0.5s infinite alternate;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3), 
+              inset 0 -3px 5px rgba(0,0,0,0.1),
+              0 0 20px rgba(255, 105, 180, 0.8),
+              0 0 40px rgba(138, 43, 226, 0.4);
+}
+
+@keyframes pulse-btn {
+  from { transform: scale(0.95); }
+  to { transform: scale(1.05); }
+}
+
+/* ===== PARTÍCULAS VOLANTES ===== */
+.particles {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.particle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: radial-gradient(circle, 
+    #ff69b4 0%, 
+    #8a2be2 40%, 
+    transparent 70%);
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: particle-burst 2s ease-out forwards;
+  animation-delay: calc(var(--index) * 0.1s);
+  box-shadow: 0 0 8px #ff69b4, 0 0 15px rgba(138, 43, 226, 0.6);
+}
+
+@keyframes particle-burst {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) translate(0, 0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) 
+               translate(calc(cos(calc(var(--index) * 45deg)) * 150px), 
+                        calc(sin(calc(var(--index) * 45deg)) * 150px))
+               scale(0);
+  }
+}

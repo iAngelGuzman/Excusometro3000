@@ -1,0 +1,62 @@
+<div class="roulette-wrapper" [class.celebrate]="isCelebrating" [class.spinning]="isSpinning">
+  <!-- Efectos de luz de fondo -->
+  <div class="light-rays" *ngIf="isSpinning">
+    <div class="ray" style="--delay: 0s"></div>
+    <div class="ray" style="--delay: 0.1s"></div>
+    <div class="ray" style="--delay: 0.2s"></div>
+    <div class="ray" style="--delay: 0.3s"></div>
+    <div class="ray" style="--delay: 0.4s"></div>
+    <div class="ray" style="--delay: 0.5s"></div>
+    <div class="ray" style="--delay: 0.6s"></div>
+    <div class="ray" style="--delay: 0.7s"></div>
+  </div>
+
+  <!-- Efecto de glow circular -->
+  <div class="glow-effect" *ngIf="isSpinning"></div>
+
+  <!-- Puntero superior con efecto -->
+  <div class="pointer" [class.active]="isSpinning">
+    <ion-icon name="caret-down-sharp"></ion-icon>
+  </div>
+  
+  <!-- Rueda que gira con efectos -->
+  <div class="wheel-container" [style.transform]="'rotate(' + rotationAngle + 'deg)'">
+    <!-- Halo de luz alrededor de la rueda -->
+    <div class="wheel-halo" *ngIf="isSpinning"></div>
+
+    <div class="wheel">
+      <div class="wheel-inner"></div>
+      
+      <!-- Textos o íconos decorativos dentro de la ruleta -->
+      <div class="labels">
+        <span class="label" style="--i: 1">?</span>
+        <span class="label" style="--i: 2">!</span>
+        <span class="label" style="--i: 3">?</span>
+        <span class="label" style="--i: 4">!</span>
+        <span class="label" style="--i: 5">?</span>
+        <span class="label" style="--i: 6">!</span>
+      </div>
+
+      <!-- Efecto de destellos en la rueda -->
+      <div class="sparkles" *ngIf="isSpinning">
+        <span class="sparkle" style="--angle: 0deg"></span>
+        <span class="sparkle" style="--angle: 60deg"></span>
+        <span class="sparkle" style="--angle: 120deg"></span>
+        <span class="sparkle" style="--angle: 180deg"></span>
+        <span class="sparkle" style="--angle: 240deg"></span>
+        <span class="sparkle" style="--angle: 300deg"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Botón central con efectos mejorados -->
+  <div class="center-btn" (click)="spin()" [class.disabled]="isSpinning">
+    {{ isSpinning ? '...' : 'GIRAR' }}
+    <div class="btn-glow" *ngIf="!isSpinning"></div>
+  </div>
+
+  <!-- Partículas que salen al girar -->
+  <div class="particles" *ngIf="isSpinning">
+    <div class="particle" *ngFor="let i of [0,1,2,3,4,5,6,7]" [style.--index]="i"></div>
+  </div>
+</div>

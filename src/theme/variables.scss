@@ -1,0 +1,39 @@
+:root {
+  /** primary **/
+  --ion-color-primary: #8a2be2; /* Bright Purple */
+  --ion-color-primary-rgb: 138,43,226;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255,255,255;
+  --ion-color-primary-shade: #7926c7;
+  --ion-color-primary-tint: #9640e5;
+
+  /** secondary **/
+  --ion-color-secondary: #ff6b6b; /* Punchy Red/Orange */
+  --ion-color-secondary-rgb: 255,107,107;
+  --ion-color-secondary-contrast: #ffffff;
+  --ion-color-secondary-contrast-rgb: 255,255,255;
+  --ion-color-secondary-shade: #e05e5e;
+  --ion-color-secondary-tint: #ff7a7a;
+
+  /** tertiary **/
+  --ion-color-tertiary: #4ecdc4; /* Mint Green */
+  --ion-color-tertiary-rgb: 78,205,196;
+  --ion-color-tertiary-contrast: #000000;
+  --ion-color-tertiary-contrast-rgb: 0,0,0;
+  --ion-color-tertiary-shade: #44b4ac;
+  --ion-color-tertiary-tint: #60d2c9;
+
+  /** Global border radius for a fun/bubbly look **/
+  --ion-border-radius: 20px;
+  --ion-font-family: 'Comic Sans MS', 'Chalkboard SE', 'Marker Felt', sans-serif; /* Playful fallback fonts */
+}
+
+/* Override default card radius globally */
+ion-card {
+  --border-radius: 24px;
+}
+
+/* Optional Dark mode overrides if needed, but we focus on bright fun colors */
+@media (prefers-color-scheme: dark) {
+  /* Keep it dark but maintain the fun primary/secondary colors */
+}
